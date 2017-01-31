@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script> 
+  function debounce (func, wait, immediate) {
+    var timeout;
+
+    return function () {
+      var context = this
+      var ags = arguments;
+
+      function later () {
+        timeout = null;
+        if (!immediate) {
+          func.apply(context, arguments);
+        }
+      }
+
+      var callNow = immediate && !timeout
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait)
+      if (callNow) {
+        func.apply(context, wait);
+      }
+    }
+  }
+  var i = 0;
+  var fixBox = debounce(function () {
+    console.log(i++);
+  }, 500);
+
+  window.addEventListener('resize', fixBox);
+  </script>
+</body>
+</html>
